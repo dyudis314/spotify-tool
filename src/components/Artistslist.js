@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Tracks = () => {
+const Artistslist = () => {
 
   const [token, setToken] = useState('');
   const [tracks, setTracks] = useState([]);
 
   const id = '43O3c6wewpzPKwVaGEEtBM';
-  const market = 'US'
 
   // https://open.spotify.com/artist/5e9F4w3zRnUHwBPyP1SXeN?si=15OOJnGfQfWHqetX-bv4hw&dl_branch=1
 
@@ -49,4 +48,4 @@ const Tracks = () => {
   )
 }
 
-export default Tracks;
+export default Artistslist;
