@@ -1,21 +1,35 @@
 import { useState } from 'react';
 import './App.css';
-import Artistslist from './components/Artistslist';
-import Form from './components/Form';
+import Dashboard from './components/Dashboard';
+//import Form from './components/Form';
 
 function App() {
 
+  const [token, setToken] = useState("");
   const [inputText, setInputText] = useState("");
+  //const [playlists, setPlaylists] = useState([]);
 
   return (
     <div className="App">
-      <h1>Spotify Tool</h1>
-      <Artistslist />
-      <Form
-      inputText={inputText}
-      setInputText={setInputText} />
+      <h1>Playlist Finder</h1>
+        <Dashboard
+        token={token}
+        setToken={setToken}
+        inputText={inputText}
+        setInputText={setInputText}
+        />
+       
     </div>
   );
 }
 
 export default App;
+
+/*
+ <Form 
+        inputText={inputText}
+        setInputText={setInputText}
+        playlists={playlists}
+        setPlaylists={setPlaylists}
+        />
+        */
