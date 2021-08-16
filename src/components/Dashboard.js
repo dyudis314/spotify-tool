@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-node';
-//import Form from '../components/Form';
 import PlaylistResults from './PlaylistResults';
+import { Input } from '@material-ui/core';
+
+
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "73ee9f817c17446898b13902a4aa55b6",
 })
 
-const Dashboard = ({token, setToken, inputText, setInputText }) => {
+const Dashboard = ({token, setToken }) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   console.log(searchResults)
@@ -27,11 +29,6 @@ const Dashboard = ({token, setToken, inputText, setInputText }) => {
       if (cancel) return
     setSearchResults(
     res.body.playlists.items.map(playlist => {
-      /*const smallestImage = playlist.images.reduce(
-        (smallest, image) => {
-          if (image.height < smallest.height) return image
-          return smallest
-        }, playlist.album.images[0])*/
         return { 
          title: playlist.name,
          description: playlist.description,
@@ -89,11 +86,13 @@ const Dashboard = ({token, setToken, inputText, setInputText }) => {
   return(
     <div>
       <form>
-        <input 
+        <Input 
         placeholder="Search playlists....(Chill, Energetic, Gym)" 
         value={search} 
-        onChange={searchHandler}>
-        </input>
+        onChange={searchHandler}
+        autoComplete="chill"
+        type="text"
+        />
       </form>
       <div>
         {searchResults.map(playlist => {

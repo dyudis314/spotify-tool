@@ -6,8 +6,6 @@ import Dashboard from './components/Dashboard';
 function App() {
 
   const [token, setToken] = useState("");
-  const [inputText, setInputText] = useState("");
-  //const [playlists, setPlaylists] = useState([]);
 
   return (
     <div className="App">
@@ -15,8 +13,6 @@ function App() {
         <Dashboard
         token={token}
         setToken={setToken}
-        inputText={inputText}
-        setInputText={setInputText}
         />
        
     </div>
@@ -24,12 +20,3 @@ function App() {
 }
 
 export default App;
-
-/*
- <Form 
-        inputText={inputText}
-        setInputText={setInputText}
-        playlists={playlists}
-        setPlaylists={setPlaylists}
-        />
-        */
