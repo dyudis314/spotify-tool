@@ -6,6 +6,17 @@ import Dashboard from './components/Dashboard';
 function App() {
 
   const [token, setToken] = useState("");
+  const [status, setStatus] = useState("Liked");
+  const [filteredPlaylists, setFilteredPlaylists] = useState([]);
+
+  const filterHandler = () => {
+    switch(status) {
+      case 'Liked' :
+      setFilteredPlaylists(filteredPlaylists.filter(playlists => playlists.liked === true))
+      break;
+      setFilteredPlaylists(filteredPlaylists.filter(playlists => playlists.liked === false))
+    }
+  }
 
   return (
     <div className="App">

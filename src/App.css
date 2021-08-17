@@ -4,3 +4,8 @@
 }
 
 body {  background: linear-gradient(90deg, #db715c, #f89c47);}
+
+.liked {
+  text-decoration: line-through;
+  opacity: 0.5;
+}

@@ -6,6 +6,7 @@ import { Input } from '@material-ui/core';
 
 
 
+
 const spotifyApi = new SpotifyWebApi({
   clientId: "73ee9f817c17446898b13902a4aa55b6",
 })
@@ -13,7 +14,24 @@ const spotifyApi = new SpotifyWebApi({
 const Dashboard = ({token, setToken }) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  console.log(searchResults)
+  const [status, setStatus] = useState("Liked");
+  const [filteredPlaylists, setFilteredPlaylists] = useState([]);
+
+  const filterHandler = () => {
+    switch(status) {
+      case 'Liked' :
+      setFilteredPlaylists(searchResults.filter(playlists => playlists.liked === true))
+      break;
+      case 'Disliked' :
+      setFilteredPlaylists(searchResults.filter(playlists => playlists.liked === false))
+      break;
+      default:
+      setFilteredPlaylists(searchResults);
+    }
+  }
+
+ //console.log(searchResults)
+
 
   useEffect(()=> {
     if (!token) return
@@ -29,13 +47,15 @@ const Dashboard = ({token, setToken }) => {
       if (cancel) return
     setSearchResults(
     res.body.playlists.items.map(playlist => {
+      console.log(res.body.playlists.items);
         return { 
          title: playlist.name,
          description: playlist.description,
          image: playlist.images[0].url,
          id: playlist.id,
          url: playlist.external_urls.spotify,
-         length: playlist.tracks.total
+         length: playlist.tracks.total,
+         liked: false
           }
         }
       ));
@@ -83,23 +103,39 @@ const Dashboard = ({token, setToken }) => {
     }).catch(error => console.log(error))
   }, [])
 
+  const statusHandler = (e) => {
+    setStatus(e.target.value);
+    console.log(e.target.value);
+  }
+
+
   return(
     <div>
       <form>
         <Input 
-        placeholder="Search playlists....(Chill, Energetic, Gym)" 
+        placeholder="Search playlists... (Chill, Energetic, Gym)" 
         value={search} 
         onChange={searchHandler}
         autoComplete="chill"
         type="text"
+        style={{width: "75%"}}
         />
       </form>
+      <div className="select">
+        <select name="likes" className="filter-likes" onChange={statusHandler}>
+            <option value="Liked">Liked</option>
+            <option value="Disliked">Disliked</option>
+            <option value="All">All</option>
+        </select>
+      </div>
       <div>
         {searchResults.map(playlist => {
           return (
           <PlaylistResults 
           playlist={playlist}
           key={playlist.id}
+          searchResults={searchResults}
+          setSearchResults={setSearchResults}
           />
         )})}
       </div>

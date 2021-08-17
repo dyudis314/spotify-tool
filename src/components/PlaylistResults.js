@@ -1,15 +1,24 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
 
 
-const PlaylistResults = ({playlist}) => {
+const PlaylistResults = ({playlist, searchResults, setSearchResults}) => {
+
+  const likeHandler = (e) => {
+    console.log(e.target);
+    setSearchResults(searchResults.map(playlist => {
+      if (playlist.id === searchResults.id) {
+        return {
+          ...playlist, 
+          liked: !playlist.liked
+        }
+      }
+      return playlist;
+    }))
+  }
 
   const results = {
         width: "100px",
@@ -20,11 +29,13 @@ const PlaylistResults = ({playlist}) => {
 
   return (
     <div>
-      <Card>
+      <Card className={`playlist ${playlist.liked ? "liked" : ""}`}>
         <CardContent>
         <h3>{playlist.title}</h3>
-          <a href={playlist.url} target="_blank">Click Here to Listen</a><br></br>
-        <img src={playlist.image} style={results}/>
+          <a href={playlist.url} target="_blank" rel="noreferrer">Click Here to Listen</a><br></br>
+        <img src={playlist.image} style={results} alt="playlist_image"/>
+        <button onClick={likeHandler}><i className="far fa-heart"></i></button>
+        <button><i className="far fa-trash"></i></button>
         </CardContent>
       </Card>
     <Divider></Divider>
